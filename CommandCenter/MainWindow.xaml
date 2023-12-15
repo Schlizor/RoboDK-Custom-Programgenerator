@@ -5,7 +5,19 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:CommandCenter"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
+        Title="MainWindow" Height="450" Width="800"
+       
+        >
+
+    <Window.Resources>
+        <local:MainViewModel x:Key="MainViewModel"/>
+    </Window.Resources>
+
+    <Window.DataContext>
+        <StaticResource ResourceKey="MainViewModel"/>
+    </Window.DataContext>
+
+
     <Grid>
         <!-- Define the columns -->
         <Grid.ColumnDefinitions>
@@ -19,20 +31,20 @@
 
         <!-- Left Grid: Robot/Frame Selection -->
         <Grid Grid.Column="0" Background="#DDD">
-            <ListBox x:Name="RobotFrameListBox" Margin="10" />
+            <ComboBox x:Name="SelectRobot" Margin="10,10,10,400" ItemsSource="{Binding data}"> </ComboBox>
             <!-- Add other UI elements for robot/frame selection here -->
         </Grid>
 
         <!-- Middle Grid: Target List -->
         <Grid Grid.Column="1" Background="#EEE">
-            <ListBox x:Name="TargetListBox" Margin="10" />
+            <ListBox x:Name="TargetListBox" Margin="10" ItemsSource="{Binding Targets}" />
             <!-- Additional UI elements for target display can be added here -->
         </Grid>
 
         <!-- Right Grid: Buttons -->
         <Grid Grid.Column="2" Background="#F3F3F3">
             <StackPanel VerticalAlignment="Top" Margin="10">
-                <Button x:Name="CreateTargetButton" Content="Create Target" Margin="5" />
+                <Button x:Name="CreateTargetButton" Content="Create Target" Margin="5" Command ="{Binding CreateTargetCommand}" />
                 <Button x:Name="OtherButton" Content="Other Action" Margin="5" />
                 <!-- Add more buttons or other controls as needed -->
             </StackPanel>
