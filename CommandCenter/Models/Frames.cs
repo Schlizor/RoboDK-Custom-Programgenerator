@@ -13,6 +13,8 @@ namespace CommandCenter.Models
     {
         private IItem _frame;
 
+
+
         public string Name
         {
             get
@@ -37,11 +39,13 @@ namespace CommandCenter.Models
         public Frames(IItem frame)
         { 
                 _frame = frame;
+
+            
         }
 
         public override string ToString()
         {
-            return $"{Name} ; {pose}";
+            return $"{Name} ; {pose}" ;
         }
 
 

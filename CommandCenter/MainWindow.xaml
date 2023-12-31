@@ -16,38 +16,110 @@
     <Window.DataContext>
         <StaticResource ResourceKey="MainViewModel"/>
     </Window.DataContext>
-
-
     <Grid>
-        <!-- Define the columns -->
+        <!-- Spaltendefinitionen für das Grid -->
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*" />
-            <!-- Left column for robot/frame selection -->
             <ColumnDefinition Width="2*" />
-            <!-- Middle column for target list -->
             <ColumnDefinition Width="*" />
-            <!-- Right column for buttons -->
         </Grid.ColumnDefinitions>
 
-        <!-- Left Grid: Robot/Frame Selection -->
-        <Grid Grid.Column="0" Background="#DDD">
-            <ComboBox x:Name="SelectRobot" Margin="10,10,10,400" ItemsSource="{Binding data}"> </ComboBox>
-            <!-- Add other UI elements for robot/frame selection here -->
+        <!-- Zeilendefinitionen für die erste Spalte -->
+        <Grid Grid.Column="0">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*" />
+                <RowDefinition Height="*" />
+            </Grid.RowDefinitions>
+
+            <!-- Erste ListBox mit Header in der ersten Spalte -->
+            <GroupBox Grid.Row="0" Header="Frames">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="*"/>
+                        <!-- Nimmt den verfügbaren Platz ein -->
+                        <RowDefinition Height="22"/>
+                        <RowDefinition Height="22"/>
+                        <!-- Button mit fester Höhe von 5 Einheiten -->
+                        <RowDefinition Height="22"/>
+                    </Grid.RowDefinitions>
+
+                    <ListBox Grid.Row="0" x:Name="FramesListBox"  ItemsSource="{Binding Wrapper.Frames}" />
+
+
+
+                    <Button Grid.Row="2" x:Name="CreateFrame" Content="Create Frame" Command ="{Binding AddFrameCommand}"/>
+                    <Button Grid.Row="3" x:Name="AddFrametoList" Content="Add Frame to Program" Command ="{Binding AddFrameCommand}"/>
+
+                </Grid>
+            </GroupBox>
+
+
+
+            <!-- Zweite ListBox mit Header in der ersten Spalte -->
+            <GroupBox Grid.Row="1" Header="Targets">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="*"/>
+                        <!-- Nimmt den verfügbaren Platz ein -->
+                        <RowDefinition Height="22"/>
+                        <!-- Button mit fester Höhe von 5 Einheiten -->
+                        <RowDefinition Height="22"/>
+                    </Grid.RowDefinitions>
+
+                    <ListBox Grid.Row="1" x:Name="TargetListBox" Margin="10" ItemsSource="{Binding Wrapper.Targets}" />
+                    <Button Grid.Row="1" x:Name="CreateTarget" Content="Create Target" Command ="{Binding AddTargetCommand}"/>
+                    <Button Grid.Row="2" x:Name="AddTargettoList" Content="Add Target to Program" Command ="{Binding AddTargetToProgramCommand}"/>
+
+
+                </Grid>
+            </GroupBox>
         </Grid>
 
-        <!-- Middle Grid: Target List -->
-        <Grid Grid.Column="1" Background="#EEE">
-            <ListBox x:Name="TargetListBox" Margin="10" ItemsSource="{Binding Targets}" />
-            <!-- Additional UI elements for target display can be added here -->
+        <!-- Programm -->
+        <Grid Grid.Column="1">
+            <!-- Erste ListBox mit Header in der ersten Spalte -->
+            <GroupBox Header="Program">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="22"/>
+                        <RowDefinition Height="22"/>
+                        <RowDefinition Height="22"/>
+                    </Grid.RowDefinitions>
+
+                    <ListBox Grid.Row="0" x:Name="ProgramBox"  ItemsSource="{Binding Wrapper.Frames}" />
+
+                    <StackPanel Orientation="Horizontal" Grid.Row="1" HorizontalAlignment="right" >
+
+                        <Button x:Name="SelectedUp" Content="^" Command="{Binding SelectedUpCommand}" Width="50" />
+                        <Button x:Name="SelectedDown" Content="v" Command="{Binding SelectedDownCommand}" Width="50"/>
+
+
+
+                    </StackPanel>
+
+                    <Button Grid.Row="2" x:Name="CreateFame" Content="Create Frame" Command ="{Binding AddFrameCommand}"/>
+                    <Button Grid.Row="3" x:Name="DeleteSelected" Content="Delete selected Item" Command ="{Binding DeleteSelectedCommand}" />
+                
+
+                </Grid>
+            </GroupBox>
         </Grid>
 
-        <!-- Right Grid: Buttons -->
-        <Grid Grid.Column="2" Background="#F3F3F3">
-            <StackPanel VerticalAlignment="Top" Margin="10">
+        <Grid Grid.Column="2">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*" />
+                <RowDefinition Height="*" />
+            </Grid.RowDefinitions>
+            <!-- Buttons in der rechten Spalte -->
+            <StackPanel Grid.Row="1" Orientation="Vertical" VerticalAlignment="Bottom">
                 <Button x:Name="CreateTargetButton" Content="Create Target" Margin="5" Command ="{Binding CreateTargetCommand}" />
-                <Button x:Name="OtherButton" Content="Other Action" Margin="5" />
-                <!-- Add more buttons or other controls as needed -->
+                <Button x:Name="UpdateButton" Content="Update" Margin="5" Command ="{Binding UpdateCommand}" />
+                <Button Margin="5">Button 3</Button>
+                <Button Margin="5">Button 4</Button>
+                <Button Margin="5">Button 5</Button>
             </StackPanel>
+            <ListBox Grid.Row="0" x:Name="RobotListBox" Margin="10" ItemsSource="{Binding Wrapper.Robots}" />
         </Grid>
     </Grid>
 </Window>

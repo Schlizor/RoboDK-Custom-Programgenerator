@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 using CommandCenter.Models;
 using RoboDk.API;
 using RoboDk.API.Model;
+using CommandCenter.View;
 
 namespace CommandCenter
 {
@@ -17,35 +18,42 @@ namespace CommandCenter
         public RoboDK activeStation;
 
         [ObservableProperty]
-        private List<Targets> targets = new();
-
+        public ViewWrapper wrapper;
 
         public MainViewModel() 
         { 
             activeStation = new RoboDK();
+            wrapper = new ViewWrapper(activeStation);
 
-            getTargets();
+
+
         }
 
         [RelayCommand]
         void CreateTarget()
         {
             IItem newtarget = activeStation.AddTarget("Test");
-            Targets.Add(new Targets(newtarget));
+            Wrapper.Update();
         }
 
-
-        void getTargets()
+        [RelayCommand]
+        void Update()
         {
-            foreach (IItem item in activeStation.GetItemList())
-            {
-                if(item.GetItemType() == ItemType.Target)
-                {
-                    Targets.Add(new Targets(item));
-                    //.Add(new Targets(item));
-                }
-            }
+            Wrapper.Update();
         }
+
+        [RelayCommand]
+        void AddTargetToProgram()
+        { 
+        }
+
+        [RelayCommand]
+        void AddFrameToProgram()
+        {
+
+        }
+
+
     }
 
 
