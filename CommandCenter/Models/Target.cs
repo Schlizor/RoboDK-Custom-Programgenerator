@@ -9,7 +9,7 @@ using System.Windows.Controls;
 
 namespace CommandCenter.Models
 {
-    internal class Targets 
+    internal class Target 
     {
 
         private IItem _target;
@@ -26,7 +26,7 @@ namespace CommandCenter.Models
 
         public Mat pose { get { return _target.Pose(); } }
 
-        public IItem Target
+        public IItem TargetItem
         {
             get { return _target; }
             private set { _target = value; }
@@ -39,7 +39,7 @@ namespace CommandCenter.Models
         /// </summary>
         /// <param name="target"></param>
         /// <exception cref="ArgumentException"></exception>
-        public Targets(IItem target)
+        public Target(IItem target)
         {
             _target = target;
 

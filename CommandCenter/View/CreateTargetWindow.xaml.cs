@@ -1,4 +1,6 @@
-﻿using System;
+﻿using CommandCenter.ViewModels;
+using CommunityToolkit.Mvvm.Messaging;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -10,19 +12,23 @@ using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace CommandCenter
+namespace CommandCenter.View
 {
     /// <summary>
-    /// Interaction logic for MainWindow.xaml
+    /// Interaktionslogik für CreateTargetWindow.xaml
     /// </summary>
-    public partial class MainWindow : Window
+    public partial class CreateTargetWindow : Window
     {
-        public MainWindow()
+        public CreateTargetWindow()
         {
             InitializeComponent();
+
+            WeakReferenceMessenger.Default.Register<CreateTargetViewModel>(this, (r, m) =>
+            {
+                this.Close();
+            });
         }
     }
 }

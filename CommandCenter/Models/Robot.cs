@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace CommandCenter.Models
 {
-    internal class Robots
+    public class Robot
     {
 
         private IItem _robot;
@@ -23,7 +23,7 @@ namespace CommandCenter.Models
 
         public Mat pose { get { return _robot.Pose(); } }
 
-        public IItem Robot
+        public IItem Item
         {
             get { return _robot; }
             private set { _robot = value; }
@@ -31,11 +31,11 @@ namespace CommandCenter.Models
 
 
         /// <summary>
-        /// Object which represents a Frame.
+        /// Object which represents a Robot.
         /// </summary>
         /// <param name="robot"></param>
         /// <exception cref="ArgumentException"></exception>
-        public Robots(IItem robot)
+        public Robot(IItem robot)
         {
             if (robot.GetItemType() == ItemType.Robot)
             {

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -9,7 +10,8 @@ using RoboDk.API.Model;
 
 namespace CommandCenter.Models
 {
-    internal class Frames
+    internal class Frame
+
     {
         private IItem _frame;
 
@@ -25,10 +27,12 @@ namespace CommandCenter.Models
 
         public Mat pose { get { return _frame.Pose(); } } 
 
-        public IItem Frame { 
+        public IItem FrameItem { 
             get { return _frame; }
             private set { _frame = value; }
         }
+
+        public long ItemId => throw new NotImplementedException();
 
 
         /// <summary>
@@ -36,7 +40,7 @@ namespace CommandCenter.Models
         /// </summary>
         /// <param name="frame"></param>
         /// <exception cref="ArgumentException"></exception>
-        public Frames(IItem frame)
+        public Frame(IItem frame)
         { 
                 _frame = frame;
 
@@ -48,6 +52,6 @@ namespace CommandCenter.Models
             return $"{Name} ; {pose}" ;
         }
 
-
+       
     }
 }

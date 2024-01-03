@@ -8,6 +8,7 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Documents;
 
 namespace CommandCenter.View
 {
@@ -15,18 +16,19 @@ namespace CommandCenter.View
     {
         private RoboDK? activeStation = null;
 
-        [ObservableProperty]
-        public List<Frames> frames = new();
+        public List<IO> iOs = new();
+
+        public List<Frame> Frames;
+
+        public List<Robot> Robots;
 
         [ObservableProperty]
-        public List<Targets> targets = new();
+        public List<Target> targets;
 
         [ObservableProperty]
-        public List<Robots> robots = new ();
+        private ObservableCollection<object> program;
 
-        [ObservableProperty]
-        public List<object> objectlist = new();
-
+        public List<IItem> programlistRoboDK;
 
 
         public ViewWrapper(RoboDK activeStation)
@@ -38,73 +40,63 @@ namespace CommandCenter.View
                 Targets = getTargets();
                 Frames = getFrames();
                 Robots = getRobots();
+                programlistRoboDK = GetPrograms();
             }
+
+            Program = new();
+
         }
 
         public void Update()
         {
 
-            if (activeStation != null)
-            {
-                Targets = getTargets();
-                Frames = getFrames();
-                Robots = getRobots();
-            }
+            if (activeStation == null)
+                return;
+
+            Targets = getTargets();
+            Frames = getFrames();
+            Robots = getRobots();
+ 
         }
 
 
-        List <Targets> getTargets()
+
+
+        #region GetData
+        List<IItem> GetPrograms()
         {
-
-            List<Targets> targetstemp = new List<Targets>();    
-
-            foreach (IItem item in activeStation.GetItemList())
-            {
-                if (item.GetItemType() == ItemType.Target)
-                {
-                    
-                    targetstemp.Add(new Targets(item));
-                    //.Add(new Targets(item));
-                }
-            }
-
-            return targetstemp;
+            return (from IItem item in activeStation.GetItemList()
+                    where item.GetItemType() == ItemType.Program
+                    select item)
+                    .ToList();
         }
 
-        List<Frames> getFrames()
+
+        List <Target> getTargets()
         {
-
-            List<Frames> temp = new List<Frames>();
-
-            foreach (IItem item in activeStation.GetItemList())
-            {
-                if (item.GetItemType() == ItemType.Frame)
-                {
-                    temp.Add(new Frames(item));
-                    //.Add(new Targets(item));
-                }
-            }
-
-            return temp;
+            return (from IItem item in activeStation.GetItemList()
+                    where item.GetItemType() == ItemType.Target
+                    select new Target(item))
+                    .ToList();
         }
 
-        List<Robots> getRobots()
+        List<Frame> getFrames()
         {
-
-            List<Robots> temp = new List<Robots>();
-
-            foreach (IItem item in activeStation.GetItemList())
-            {
-                if (item.GetItemType() == ItemType.Robot)
-                {
-                    temp.Add(new Robots(item));
-                    //.Add(new Targets(item));
-                }
-            }
-
-            return temp;
+            return (from IItem item in activeStation.GetItemList()
+                    where item.GetItemType() == ItemType.Frame
+                    select new Frame(item))
+                    .ToList();
         }
 
+        List<Robot> getRobots()
+        {
+            return (from IItem item in activeStation.GetItemList()
+                    where item.GetItemType() == ItemType.Robot
+                    select new Robot(item))
+                    .ToList();
+        }
+
+        #endregion
 
     }
 }

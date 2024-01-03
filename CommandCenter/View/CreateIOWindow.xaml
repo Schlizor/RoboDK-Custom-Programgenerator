@@ -1,0 +1,63 @@
+﻿<Window x:Class="CommandCenter.View.CreateIOWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:CommandCenter.ViewModels"
+        mc:Ignorable="d"
+        Title="CreateIOWindow" Height="250" Width="500">
+
+    <Window.Resources>
+        <local:CreateIOViewModel x:Key="CreateIOModel"/>
+    </Window.Resources>
+
+    <Window.DataContext>
+        <local:CreateIOViewModel/>
+    </Window.DataContext>
+
+    <Grid>
+
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition  Width="250"/>
+            <ColumnDefinition Width=" *"/>
+        </Grid.ColumnDefinitions>
+
+        <StackPanel Grid.Column="0">
+
+            <Grid>
+
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition  Width="*"/>
+                    <ColumnDefinition Width=" *"/>
+                </Grid.ColumnDefinitions>
+
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*" MinHeight="50" />
+                    <RowDefinition Height="*" MinHeight="50"/>
+                    <RowDefinition Height="*" MinHeight="50"/>
+                </Grid.RowDefinitions>
+
+                <Label Grid.Column="0" Grid.Row = "0" Content="IO Type" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="20"/>
+                <ComboBox Grid.Column="1" Grid.Row="0" Height="30" SelectedItem="{Binding SelectedIOType}" ItemsSource="{Binding iotypes}" />
+
+                <Label Grid.Column="0"  Grid.Row="1" Content="IO Name" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="20" />
+                <TextBox Grid.Column="1"  Grid.Row="1" Height="30" Text="{Binding IoName}" />
+
+                <Label Grid.Column="0"  Grid.Row="2" Content="IO Wert" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="20" />
+                <TextBox Grid.Column="1"  Grid.Row="2" Height="30" Text="{Binding IoValue}"/>
+
+            </Grid>
+
+        </StackPanel>
+
+        <Button Grid.Column="1"
+                Height="30"
+                Width="100"
+                Margin="20"
+                HorizontalAlignment="Right"
+                VerticalAlignment="Bottom"
+                Content="Confirm Input"
+                IsEnabled="{Binding ButtonisEnabled}"
+                Command="{Binding ConfirmInputCommand}"/>
+    </Grid>
+</Window>
