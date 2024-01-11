@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:CommandCenter.ViewModels"
         mc:Ignorable="d"
-        Title="CreateIOWindow" Height="250" Width="500">
+        Title="CreateIOWindow" Height="300" Width="500">
 
     <Window.Resources>
         <local:CreateIOViewModel x:Key="CreateIOModel"/>
@@ -20,6 +20,7 @@
         <Grid.ColumnDefinitions>
             <ColumnDefinition  Width="250"/>
             <ColumnDefinition Width=" *"/>
+
         </Grid.ColumnDefinitions>
 
         <StackPanel Grid.Column="0">
@@ -29,16 +30,18 @@
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition  Width="*"/>
                     <ColumnDefinition Width=" *"/>
+
                 </Grid.ColumnDefinitions>
 
                 <Grid.RowDefinitions>
                     <RowDefinition Height="*" MinHeight="50" />
                     <RowDefinition Height="*" MinHeight="50"/>
                     <RowDefinition Height="*" MinHeight="50"/>
+                    <RowDefinition Height="*" MinHeight="50"/>
                 </Grid.RowDefinitions>
 
                 <Label Grid.Column="0" Grid.Row = "0" Content="IO Type" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="20"/>
-                <ComboBox Grid.Column="1" Grid.Row="0" Height="30" SelectedItem="{Binding SelectedIOType}" ItemsSource="{Binding iotypes}" />
+                <ComboBox Grid.Column="1" Grid.Row="0" Height="30" SelectedItem="{Binding SelectedIOType, Mode=TwoWay}" ItemsSource="{Binding iotypes}"/>
 
                 <Label Grid.Column="0"  Grid.Row="1" Content="IO Name" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="20" />
                 <TextBox Grid.Column="1"  Grid.Row="1" Height="30" Text="{Binding IoName}" />
@@ -46,9 +49,18 @@
                 <Label Grid.Column="0"  Grid.Row="2" Content="IO Wert" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="20" />
                 <TextBox Grid.Column="1"  Grid.Row="2" Height="30" Text="{Binding IoValue}"/>
 
+                <Label Grid.Column="0" Grid.Row = "3" Content="Timeout (ms)" Margin="20"/>
+                <TextBox Grid.Column="1" Grid.Row="3" Height="30" Text="{Binding Timeout}"/>
+
+
             </Grid>
 
+
         </StackPanel>
+
+
+
+
 
         <Button Grid.Column="1"
                 Height="30"

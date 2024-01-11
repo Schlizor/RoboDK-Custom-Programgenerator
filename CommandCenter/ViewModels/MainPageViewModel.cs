@@ -156,7 +156,7 @@ namespace CommandCenter.ViewModels
                     }
                     else if(io.iotype == IO.IOType.AO)
                     {
-                        MessageBox.Show("AO Implementation not found in API");
+                        MessageBox.Show("SetAO Implementation not found in API. There will be DO created instead of AO. Please change it in RoboDK itself ");
                     }
                 }
             }

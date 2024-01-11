@@ -12,22 +12,26 @@ using System.Dynamic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 
 namespace CommandCenter.ViewModels
 {
     internal partial class CreateIOViewModel : ObservableObject
     {
         [ObservableProperty]
-        public IO.IOType selectedIOType;
+        IO.IOType selectedIOType;
 
         [ObservableProperty]
-        public bool buttonisEnabled = false;
+        bool buttonisEnabled = false;
 
         [ObservableProperty]
-        public string ioName;
+        string ioName;
 
         [ObservableProperty]
-        public string ioValue;
+        string ioValue;
+
+        [ObservableProperty]
+        string timeout;
 
         public Array iotypes { get; }
 
@@ -41,11 +45,27 @@ namespace CommandCenter.ViewModels
         [RelayCommand]
         private void ConfirmInput()
         {
-            var temp = new IO(SelectedIOType, IoName, IoValue);
+            
 
-            WeakReferenceMessenger.Default.Send<IODetailsMessage>(new IODetailsMessage(temp));
-            WeakReferenceMessenger.Default.Send<CreateIOViewModel>(this);
-
+            if (SelectedIOType == IO.IOType.DO || SelectedIOType == IO.IOType.AO)
+            {
+                var temp = new IO(SelectedIOType, IoName, IoValue);
+                WeakReferenceMessenger.Default.Send<IODetailsMessage>(new IODetailsMessage(temp));
+                WeakReferenceMessenger.Default.Send<CreateIOViewModel>(this);
+            }
+            else
+            {
+                try
+                {
+                    var temp = new IO(SelectedIOType, IoName, IoValue, Convert.ToDouble(Timeout));
+                    WeakReferenceMessenger.Default.Send<IODetailsMessage>(new IODetailsMessage(temp));
+                    WeakReferenceMessenger.Default.Send<CreateIOViewModel>(this);
+                }
+                catch 
+                {
+                    MessageBox.Show("Timeout was not in the correct input format. Only Digits are allowed");
+                }
+            }
         }
 
         partial void OnIoValueChanged(string oldValue, string newValue) => CheckInput();

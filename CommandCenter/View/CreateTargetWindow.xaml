@@ -34,7 +34,9 @@
             </StackPanel>
 
             <StackPanel Grid.Row="1">
-                <Button x:Name="CreateTargetwithoutRobot" Content="Create Target with linked Robot" Command ="{Binding CreateTargetwithRobotCommand}" Height="40" Margin="40"/>
+                <Button x:Name="CreateTargetwithRobot" Content="Create Target with linked Robot" Command ="{Binding CreateTargetwithRobotCommand}" Height="40" Margin="40"/>
+                <TextBlock Text="Note: You only can create a Target if there" Width="250" />
+                <TextBlock Text="is a robot linked." Width="250" />
             </StackPanel>
 
         </Grid>

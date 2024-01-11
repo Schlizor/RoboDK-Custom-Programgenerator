@@ -14,19 +14,26 @@ using CommunityToolkit.Mvvm.Messaging;
 using RoboDk.API;
 
 namespace CommandCenter.ViewModels
+
+    
 {
+    /// <summary>
+    /// Contains the UI Logic to enter a few Data for the program which will be created after. 
+    /// Receives and sends Data from/to MainViewModel (MainPage)
+    /// </summary>
     internal partial class CreateProgramViewModel : ObservableObject
     {
 
         [ObservableProperty]
-        public List<Robot> robotList;
+        List<Robot>? robotList;
 
         [ObservableProperty]
-        public string? programName;
+        string? programName;
 
         [ObservableProperty]
-        public Robot selectedRobot;
+        Robot selectedRobot;
 
+        
         public CreateProgramViewModel() 
         {
             WeakReferenceMessenger.Default.Register<RobotListMessage>(this, (r, m) =>

@@ -16,17 +16,17 @@ namespace CommandCenter.View
     {
         private RoboDK? activeStation = null;
 
-        public List<IO> iOs = new();
+        public List<IO>? iOs = new();
 
-        public List<Frame> Frames;
+        public List<Frame>? Frames;
 
-        public List<Robot> Robots;
-
-        [ObservableProperty]
-        public List<Target> targets;
+        public List<Robot>? Robots;
 
         [ObservableProperty]
-        private ObservableCollection<object> program;
+        List<Target> targets;
+
+        [ObservableProperty]
+        ObservableCollection<object> program;
 
         public List<IItem> programlistRoboDK;
 
@@ -59,9 +59,6 @@ namespace CommandCenter.View
  
         }
 
-
-
-
         #region GetData
         List<IItem> GetPrograms()
         {
@@ -74,10 +71,10 @@ namespace CommandCenter.View
 
         List <Target> getTargets()
         {
-            return (from IItem item in activeStation.GetItemList()
-                    where item.GetItemType() == ItemType.Target
-                    select new Target(item))
-                    .ToList();
+                return (from IItem item in activeStation.GetItemList()
+                        where item.GetItemType() == ItemType.Target
+                        select new Target(item))
+                        .ToList();
         }
 
         List<Frame> getFrames()
